@@ -1,2 +1,2 @@
 # AI-Work-Assistant
-Angular + NestJS + tool calling
+Angular 22 + NestJS 11 + tool calling
