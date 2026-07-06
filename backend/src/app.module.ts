@@ -7,13 +7,26 @@ import { ChatService } from './chat/chat/chat.service';
 import { ToolsModule } from './tools/tools/tools.module';
 import { AuthModule } from './auth/auth.module';
 import { TasksModule } from './tasks/tasks.module';
-import { PrismaService } from './prisma/prisma.service';
 import { PrismaModule } from './prisma/prisma.module';
-import { UsersModule } from './user/users.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [AiModule, ToolsModule, AuthModule, TasksModule, PrismaModule, UsersModule, PrismaModule],
-  controllers: [AppController, ChatController],
-  providers: [AppService, ChatService, PrismaService],
+  imports: [
+    AiModule,
+    ToolsModule,
+    AuthModule,
+    TasksModule,
+    PrismaModule,
+    UsersModule,
+    PrismaModule
+  ],
+  controllers: [
+    AppController,
+    ChatController
+  ],
+  providers: [
+    AppService,
+    ChatService
+  ],
 })
-export class AppModule {}
+export class AppModule { }
