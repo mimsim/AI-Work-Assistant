@@ -1,35 +1,26 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { AiService } from './ai.service';
-import { CreateAiDto } from './dto/create-ai.dto';
-import { UpdateAiDto } from './dto/update-ai.dto';
 
 @Controller('ai')
 export class AiController {
-  constructor(private readonly aiService: AiService) {}
+  constructor(private aiService: AiService) { }
 
-  @Post()
-  create(@Body() createAiDto: CreateAiDto) {
-    return this.aiService.create(createAiDto);
+  @Get('summary')
+  summary(@Query('userId') userId: string) {
+    return this.aiService.summary(userId);
   }
 
-  @Get()
-  findAll() {
-    return this.aiService.findAll();
+  @Get('next')
+  next(@Query('userId') userId: string) {
+    return this.aiService.nextAction(userId);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.aiService.findOne(+id);
+  @Get('prioritize')
+  prioritize(@Query('userId') userId: string) {
+    return this.aiService.prioritize(userId);
   }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAiDto: UpdateAiDto) {
-    return this.aiService.update(+id, updateAiDto);
+  @Post('chat')
+  chat(@Body() body: { userId: string; message: string }) {
+    return this.aiService.chat(body.userId, body.message);
   }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.aiService.remove(+id);
-  }
-  
 }

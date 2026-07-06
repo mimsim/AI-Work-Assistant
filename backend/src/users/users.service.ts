@@ -23,4 +23,14 @@ export class UsersService {
             include: { tasks: true },
         });
     }
+    async seedUser() {
+        return this.prisma.user.upsert({
+            where: { email: 'demo@ai.app' },
+            update: {},
+            create: {
+                email: 'demo@ai.app',
+                password: 'demo123',
+            },
+        });
+    }
 }
