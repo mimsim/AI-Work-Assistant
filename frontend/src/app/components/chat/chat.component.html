@@ -1,0 +1,32 @@
+<mat-card class="chat-card">
+    <mat-card-header>
+        <mat-card-title>AI Асистент</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="messages">
+        @for (msg of messages(); track $index) {
+        <div class="message" [class.user]="msg.role === 'user'" [class.assistant]="msg.role === 'assistant'">
+            <div class="bubble">{{ msg.content }}</div>
+        </div>
+        }
+
+        @if (isLoading()) {
+        <div class="message assistant">
+            <div class="bubble typing">
+                <mat-spinner diameter="18"></mat-spinner>
+            </div>
+        </div>
+        }
+    </mat-card-content>
+
+    <mat-card-actions class="input-row">
+        <mat-form-field appearance="outline" class="message-field">
+            <mat-label>Напиши съобщение...</mat-label>
+            <input matInput [formControl]="messageControl" (keydown)="onKeydown($event)" [disabled]="isLoading()" />
+        </mat-form-field>
+
+        <button mat-mini-fab color="primary" (click)="send()" [disabled]="isLoading() || messageControl.invalid">
+            <mat-icon>send</mat-icon>
+        </button>
+    </mat-card-actions>
+</mat-card>
