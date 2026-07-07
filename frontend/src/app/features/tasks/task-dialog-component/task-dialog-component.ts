@@ -92,8 +92,4 @@ export class TaskDialogComponent {
       },
     });
   }
-
-  cancel() {
-    this.dialogRef.close();
-  }
 }

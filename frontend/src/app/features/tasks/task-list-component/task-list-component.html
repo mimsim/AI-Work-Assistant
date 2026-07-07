@@ -1,8 +1,22 @@
 <div class="page">
-    <h1>Всички задачи</h1>
+    <div class="page-header">
+        <h1>Всички задачи</h1>
+        <button mat-raised-button color="primary" (click)="createTask()">
+            <mat-icon>add</mat-icon>
+            Нова задача
+        </button>
+    </div>
 
     @if (isLoading()) {
-    <mat-spinner diameter="32"></mat-spinner>
+    <div class="task-grid">
+        @for (i of [1, 2, 3, 4, 5, 6]; track i) {
+        <mat-card class="task-card skeleton-card">
+            <div class="skeleton-line skeleton-title"></div>
+            <div class="skeleton-line skeleton-text"></div>
+            <div class="skeleton-line skeleton-text short"></div>
+        </mat-card>
+        }
+    </div>
     } @else {
     <div class="task-grid">
         @for (task of tasks(); track task.id) {
@@ -26,7 +40,7 @@
     </div>
 
     @if (tasks().length === 0) {
-    <p class="empty">Нямаш задачи все още.</p>
+    <p class="empty">Нямаш задачи все още. Създай първата си задача! 🚀</p>
     }
     }
 </div>

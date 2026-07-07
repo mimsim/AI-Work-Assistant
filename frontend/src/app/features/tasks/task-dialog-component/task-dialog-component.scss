@@ -5,3 +5,18 @@
     min-width: 400px;
     padding-top: 8px;
 }
+
+.dialog-actions-end {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-spinner {
+    display: inline-block;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+::ng-deep .btn-spinner circle {
+    stroke: currentColor;
+}

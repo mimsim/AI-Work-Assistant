@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Редактиране на задача</h2>
+<h2 mat-dialog-title>{{ data.task ? 'Редактиране на задача' : 'Нова задача' }}</h2>
 
 <mat-dialog-content>
     <form [formGroup]="form" class="task-form">
@@ -31,13 +31,24 @@
     </form>
 </mat-dialog-content>
 
-<mat-dialog-actions>
-    <button mat-button mat-dialog-close>Отказ</button>
+<mat-dialog-actions class="dialog-actions-end">
+    <button mat-button mat-dialog-close [disabled]="isSaving() || isDeleting()">Отказ</button>
+
+    @if (data.task) {
     <button mat-button color="warn" (click)="delete()" [disabled]="isDeleting() || isSaving()">
+        @if (isDeleting()) {
+        <mat-spinner diameter="18" class="btn-spinner"></mat-spinner>
+        } @else {
         <mat-icon>delete</mat-icon>
+        }
         Изтрий
     </button>
+    }
+
     <button mat-raised-button color="primary" (click)="save()" [disabled]="form.invalid || isSaving() || isDeleting()">
-        Запази
+        @if (isSaving()) {
+        <mat-spinner diameter="18" class="btn-spinner"></mat-spinner>
+        }
+        {{ data.task ? 'Запази' : 'Създай' }}
     </button>
 </mat-dialog-actions>
