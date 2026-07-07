@@ -3,19 +3,18 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AiModule } from './ai/ai.module';
-import { ChatController } from './chat/chat/chat.controller';
-import { ChatService } from './chat/chat/chat.service';
-import { ToolsModule } from './tools/tools/tools.module';
-import { AuthModule } from './auth/auth.module';
+
+
 import { TasksModule } from './tasks/tasks.module';
-import { PrismaModule } from './prisma/prisma.module';
+;
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './core/auth/auth.module';
+import { PrismaModule } from './core/prisma/prisma.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     AiModule,
-    ToolsModule,
     AuthModule,
     TasksModule,
     PrismaModule,
@@ -23,11 +22,9 @@ import { UsersModule } from './users/users.module';
   ],
   controllers: [
     AppController,
-    ChatController
   ],
   providers: [
     AppService,
-    ChatService
   ],
 })
 export class AppModule { }

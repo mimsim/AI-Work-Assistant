@@ -1,8 +1,3 @@
-// export class UpdateTaskDto {
-//     title?: string;
-//     description?: string;
-//     status?: 'TODO' | 'IN_PROGRESS' | 'DONE';
-// }
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
 export class UpdateTaskDto {
