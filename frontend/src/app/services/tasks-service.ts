@@ -24,7 +24,7 @@ export class TasksService {
         return this.http.delete<void>(`${this.apiUrl}/${id}`);
     }
     
-    create(data: { title: string; description?: string; status: string; priority: number }): Observable<Task> {
+    create(data: { userId: any,title: string; description?: string; status: string; priority: number }): Observable<Task> {
         return this.http.post<Task>(this.apiUrl, data);
     }
 }

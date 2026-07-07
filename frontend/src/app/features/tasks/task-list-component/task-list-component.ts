@@ -1,25 +1,27 @@
+import { Component, OnInit, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MaterialModule } from '../../../material.module';
-import { TaskDialogComponent } from '../task-dialog-component/task-dialog-component';
 import { TasksService } from '../../../services/tasks-service';
+import { TaskDialogComponent } from '../task-dialog-component/task-dialog-component';
 import { Task } from '../../../core/interfaces/task-form.interface';
 
 @Component({
-  selector: 'app-task-list-component',
+  selector: 'app-task-list',
+  standalone: true,
   imports: [CommonModule, MaterialModule],
   templateUrl: './task-list-component.html',
-  styleUrls: ['./task-list-component.scss'],
+  styleUrl: './task-list-component.scss',
 })
-export class TaskListComponent {
+export class TaskListComponent implements OnInit {
   private taskService = inject(TasksService);
   private dialog = inject(MatDialog);
+  private snackBar = inject(MatSnackBar);
 
   tasks = signal<Task[]>([]);
   isLoading = signal(false);
 
-  // временно, докато няма реална автентикация
   userId = 'cmr8neeby0000vgog4uax7vdc';
 
   ngOnInit() {
@@ -36,6 +38,10 @@ export class TaskListComponent {
       error: (err) => {
         console.error(err);
         this.isLoading.set(false);
+        this.snackBar.open('Грешка при зареждане на задачите', 'OK', {
+          duration: 4000,
+          panelClass: ['snackbar-error'],
+        });
       },
     });
   }
@@ -45,16 +51,13 @@ export class TaskListComponent {
       data: { task, userId: this.userId },
       width: '480px',
     });
-
     dialogRef.afterClosed().subscribe((result) => {
       if (!result) return;
-
       if (result.action === 'updated') {
         this.tasks.update((tasks) =>
           tasks.map((t) => (t.id === result.task.id ? result.task : t)),
         );
       }
-
       if (result.action === 'deleted') {
         this.tasks.update((tasks) => tasks.filter((t) => t.id !== result.taskId));
       }
@@ -63,7 +66,7 @@ export class TaskListComponent {
 
   createTask() {
     const dialogRef = this.dialog.open<TaskDialogComponent>(TaskDialogComponent, {
-      data: { userId: this.userId },   // без task = create режим
+      data: { userId: this.userId },
       width: '480px',
     });
     dialogRef.afterClosed().subscribe((result) => {
@@ -73,7 +76,7 @@ export class TaskListComponent {
       }
     });
   }
-  
+
   statusColor(status: Task['status']): string {
     switch (status) {
       case 'DONE':

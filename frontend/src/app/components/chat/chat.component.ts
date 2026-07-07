@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../material.module';
 import { ChatService } from '../../services/chat.service';
 import { ChatMessage } from '../../core/interfaces/chat.interface';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -21,7 +22,8 @@ export class ChatComponent {
   isLoading = signal(false);
 
   messageControl = new FormControl('', { nonNullable: true, validators: [Validators.required] });
-
+  private snackBar = inject(MatSnackBar);
+  
   // временно, докато няма реална автентикация
   userId = 'cmr8neeby0000vgog4uax7vdc';
 
@@ -47,6 +49,10 @@ export class ChatComponent {
           ...msgs,
           { role: 'assistant', content: '⚠️ Грешка при връзка със сървъра.' },
         ]);
+        this.snackBar.open('Грешка при връзка със сървъра', 'OK', {
+          duration: 4000,
+          panelClass: ['snackbar-error'],
+        });
         this.isLoading.set(false);
       },
     });
