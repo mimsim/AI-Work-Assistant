@@ -1,9 +1,3 @@
-// export class CreateTaskDto {
-//     title!: string;
-//     description?: string;
-//     status?: 'TODO' | 'IN_PROGRESS' | 'DONE';
-// }
-
 import { IsOptional, IsString, IsEnum } from 'class-validator';
 
 export class CreateTaskDto {
@@ -17,4 +11,7 @@ export class CreateTaskDto {
     @IsOptional()
     @IsEnum(['TODO', 'IN_PROGRESS', 'DONE'])
     status?: 'TODO' | 'IN_PROGRESS' | 'DONE';
+
+    @IsString()
+    userId!: string; 
 }

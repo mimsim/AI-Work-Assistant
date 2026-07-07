@@ -24,10 +24,10 @@ export class TaskDialogComponent {
   statusOptions: Array<'TODO' | 'IN_PROGRESS' | 'DONE'> = ['TODO', 'IN_PROGRESS', 'DONE'];
 
   form = this.fb.nonNullable.group<TaskFormGroup>({
-    title: this.fb.nonNullable.control(this.data.task.title, Validators.required),
-    description: this.fb.nonNullable.control(this.data.task.description ?? ''),
-    status: this.fb.nonNullable.control(this.data.task.status, Validators.required),
-    priority: this.fb.nonNullable.control(this.data.task.priority, [
+    title: this.fb.nonNullable.control(this.data.task?.title ?? '', Validators.required),
+    description: this.fb.nonNullable.control(this.data.task?.description ?? ''),
+    status: this.fb.nonNullable.control(this.data.task?.status ?? 'TODO', Validators.required),
+    priority: this.fb.nonNullable.control(this.data.task?.priority ?? 3, [
       Validators.required,
       Validators.min(1),
       Validators.max(5),
@@ -38,10 +38,20 @@ export class TaskDialogComponent {
     if (this.form.invalid) return;
 
     this.isSaving.set(true);
-    this.taskService.update(this.data.task.id, this.form.getRawValue()).subscribe({
-      next: (updated) => {
+
+    const id = this.data?.task?.id;
+
+      const request$ = id != null
+      ? this.taskService.update(id, this.form.getRawValue())
+      : this.taskService.create(this.form.getRawValue());
+
+    request$.subscribe({
+      next: (task) => {
         this.isSaving.set(false);
-        this.dialogRef.close({ action: 'updated', task: updated });
+        this.dialogRef.close({
+          action: id != null ? 'updated' : 'created',
+          task,
+        });
       },
       error: (err) => {
         console.error(err);
@@ -54,10 +64,17 @@ export class TaskDialogComponent {
     if (!confirm('Сигурен ли си, че искаш да изтриеш тази задача?')) return;
 
     this.isDeleting.set(true);
-    this.taskService.delete(this.data.task.id).subscribe({
+    const id = this.data?.task?.id;
+    if (id == null) {
+      console.error('Task id is missing');
+      this.isDeleting.set(false);
+      return;
+    }
+
+    this.taskService.delete(id).subscribe({
       next: () => {
         this.isDeleting.set(false);
-        this.dialogRef.close({ action: 'deleted', taskId: this.data.task.id });
+        this.dialogRef.close({ action: 'deleted', taskId: id });
       },
       error: (err) => {
         console.error(err);

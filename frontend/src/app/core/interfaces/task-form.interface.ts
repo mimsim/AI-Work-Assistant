@@ -15,7 +15,8 @@ export interface TaskFormGroup {
 }
 
 export interface TaskDialogData {
-    task: Task;
+    task?: Task;
+    userId: string;
 }
 
 

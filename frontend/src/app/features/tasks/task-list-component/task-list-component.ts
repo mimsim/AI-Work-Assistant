@@ -42,7 +42,7 @@ export class TaskListComponent {
 
   openTask(task: Task) {
     const dialogRef = this.dialog.open<TaskDialogComponent>(TaskDialogComponent, {
-      data: { task },
+      data: { task, userId: this.userId },
       width: '480px',
     });
 
@@ -61,6 +61,19 @@ export class TaskListComponent {
     });
   }
 
+  createTask() {
+    const dialogRef = this.dialog.open<TaskDialogComponent>(TaskDialogComponent, {
+      data: { userId: this.userId },   // без task = create режим
+      width: '480px',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (!result) return;
+      if (result.action === 'created') {
+        this.tasks.update((tasks) => [...tasks, result.task]);
+      }
+    });
+  }
+  
   statusColor(status: Task['status']): string {
     switch (status) {
       case 'DONE':
