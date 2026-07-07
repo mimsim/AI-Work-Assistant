@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
-import { ChatResponse } from '../interfaces/chat.interface';
+import { ChatResponse } from '../core/interfaces/chat.interface';
 import { Observable } from 'rxjs';
 
 @Service()

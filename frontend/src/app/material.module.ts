@@ -15,6 +15,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDialogTitle, MatDialogContent, MatDialogModule, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 const MATERIAL_MODULES = [
     MatToolbarModule,
@@ -33,6 +36,13 @@ const MATERIAL_MODULES = [
     MatBadgeModule,
     MatMenuModule,
     MatSidenavModule,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogModule,
+    MatDialogActions,
+    MatDialogClose,
+    MatSelectModule,
+    MatOptionModule,
 ];
 
 @NgModule({

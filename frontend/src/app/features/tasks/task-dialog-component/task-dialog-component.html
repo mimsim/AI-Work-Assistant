@@ -1,0 +1,43 @@
+<h2 mat-dialog-title>Редактиране на задача</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="form" class="task-form">
+        <mat-form-field appearance="outline">
+            <mat-label>Заглавие</mat-label>
+            <input matInput [formControl]="form.controls.title" />
+            @if (form.controls.title.hasError('required')) {
+            <mat-error>Заглавието е задължително</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Описание</mat-label>
+            <textarea matInput [formControl]="form.controls.description" rows="3"></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Статус</mat-label>
+            <mat-select [formControl]="form.controls.status">
+                @for (opt of statusOptions; track opt) {
+                <mat-option [value]="opt">{{ opt }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Приоритет (1-5)</mat-label>
+            <input matInput type="number" [formControl]="form.controls.priority" min="1" max="5" />
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close>Отказ</button>
+    <button mat-button color="warn" (click)="delete()" [disabled]="isDeleting() || isSaving()">
+        <mat-icon>delete</mat-icon>
+        Изтрий
+    </button>
+    <button mat-raised-button color="primary" (click)="save()" [disabled]="form.invalid || isSaving() || isDeleting()">
+        Запази
+    </button>
+</mat-dialog-actions>

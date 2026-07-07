@@ -1,0 +1,32 @@
+<div class="page">
+    <h1>Всички задачи</h1>
+
+    @if (isLoading()) {
+    <mat-spinner diameter="32"></mat-spinner>
+    } @else {
+    <div class="task-grid">
+        @for (task of tasks(); track task.id) {
+        <mat-card class="task-card" (click)="openTask(task)">
+            <mat-card-header>
+                <mat-card-title>{{ task.title }}</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                @if (task.description) {
+                <p class="description">{{ task.description }}</p>
+                }
+
+                <div class="meta">
+                    <mat-chip [class]="statusColor(task.status)">{{ task.status }}</mat-chip>
+                    <span class="priority">Приоритет: {{ task.priority }}</span>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        }
+    </div>
+
+    @if (tasks().length === 0) {
+    <p class="empty">Нямаш задачи все още.</p>
+    }
+    }
+</div>

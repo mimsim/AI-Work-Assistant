@@ -3,7 +3,7 @@ import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../material.module';
 import { ChatService } from '../../services/chat.service';
-import { ChatMessage } from '../../interfaces/chat.interface';
+import { ChatMessage } from '../../core/interfaces/chat.interface';
 
 
 @Component({

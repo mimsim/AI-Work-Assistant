@@ -1,11 +1,9 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
-
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiOperation } from '@nestjs/swagger';
 import { TaskService } from './task.service';
-import { CreateTaskDto } from '../ai/dto/create-task.dto';
-import { UpdateTaskDto } from '../ai/dto/update-task.dto';
+import { CreateTaskDto } from './dto/create-task.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
 
-@ApiTags('tasks')
 @Controller('tasks')
 export class TasksController {
     constructor(private tasksService: TaskService) { }

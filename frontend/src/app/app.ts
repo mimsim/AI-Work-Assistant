@@ -1,13 +1,15 @@
 import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ChatComponent } from './components/chat/chat.component';
+import { Navbar } from './shared/components/navbar/navbar';
+
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ChatComponent],
+  standalone: true,
+  imports: [RouterOutlet, Navbar],
   templateUrl: './app.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './app.scss',
+  styleUrls: ['./app.scss'],
 })
 export class App {
   protected readonly title = signal('frontend');

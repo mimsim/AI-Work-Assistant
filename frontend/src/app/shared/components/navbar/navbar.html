@@ -1,0 +1,22 @@
+<mat-toolbar color="primary">
+    <span class="brand">
+        <mat-icon>smart_toy</mat-icon>
+        AI Task Manager
+    </span>
+
+    <span class="spacer"></span>
+
+    <a mat-button routerLink="/chat" routerLinkActive="active-link">
+        <mat-icon>chat</mat-icon>
+        Чат
+    </a>
+
+    <a mat-button routerLink="/tasks" routerLinkActive="active-link">
+        <mat-icon>list</mat-icon>
+        Всички задачи
+    </a>
+
+    <div class="user-avatar" [matTooltip]="userName">
+        {{ userInitials }}
+    </div>
+</mat-toolbar>
